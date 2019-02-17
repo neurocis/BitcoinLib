@@ -82,6 +82,9 @@ namespace BitcoinLib.Services.RpcServices.RpcService
         GetRawTransactionResponse GetRawTransaction(string txId, int verbose = 0);
         string SendRawTransaction(string rawTransactionHexString, bool? allowHighFees = false);
         SignRawTransactionResponse SignRawTransaction(SignRawTransactionRequest signRawTransactionRequest);
+        SignRawTransactionWithKeyResponse SignRawTransactionWithKey(SignRawTransactionWithKeyRequest signRawTransactionWithKeyRequest);
+        SignRawTransactionWithWalletResponse SignRawTransactionWithWallet(SignRawTransactionWithWalletRequest signRawTransactionWithWalletRequest);
+        GetFundRawTransactionResponse GetFundRawTransaction(string rawTransactionHex);
 
         #endregion
 
@@ -89,6 +92,7 @@ namespace BitcoinLib.Services.RpcServices.RpcService
 
         CreateMultiSigResponse CreateMultiSig(int nRquired, List<string> publicKeys);
         decimal EstimateFee(ushort nBlocks);
+        EstimateSmartFeeResponse EstimateSmartFee(ushort nBlocks);
         decimal EstimatePriority(ushort nBlocks);
         //  estimatesmartfee
         //  estimatesmartpriority
@@ -101,17 +105,21 @@ namespace BitcoinLib.Services.RpcServices.RpcService
 
         //  abandontransaction
         string AddMultiSigAddress(int nRquired, List<string> publicKeys, string account = null);
+        string AddWitnessAddress(string address);
         void BackupWallet(string destination);
         string DumpPrivKey(string bitcoinAddress);
         void DumpWallet(string filename);
         string GetAccount(string bitcoinAddress);
         string GetAccountAddress(string account);
         List<string> GetAddressesByAccount(string account);
+        Dictionary<string, GetAddressesByLabelResponse> GetAddressesByLabel(string label);
+        GetAddressInfoResponse GetAddressInfo(string bitcoinAddress);
         decimal GetBalance(string account = null, int minConf = 1, bool? includeWatchonly = null);
         string GetNewAddress(string account = "");
         string GetRawChangeAddress();
         decimal GetReceivedByAccount(string account, int minConf = 1);
         decimal GetReceivedByAddress(string bitcoinAddress, int minConf = 1);
+        decimal GetReceivedByLabel(string account, int minConf = 1);
         GetTransactionResponse GetTransaction(string txId, bool? includeWatchonly = null);
         decimal GetUnconfirmedBalance();
         GetWalletInfoResponse GetWalletInfo();
@@ -122,9 +130,11 @@ namespace BitcoinLib.Services.RpcServices.RpcService
         string KeyPoolRefill(uint newSize = 100);
         Dictionary<string, decimal> ListAccounts(int minConf = 1, bool? includeWatchonly = null);
         List<List<ListAddressGroupingsResponse>> ListAddressGroupings();
+        List<string> ListLabels();
         string ListLockUnspent();
         List<ListReceivedByAccountResponse> ListReceivedByAccount(int minConf = 1, bool includeEmpty = false, bool? includeWatchonly = null);
         List<ListReceivedByAddressResponse> ListReceivedByAddress(int minConf = 1, bool includeEmpty = false, bool? includeWatchonly = null);
+        List<ListReceivedByLabelResponse> ListReceivedByLabel(int minConf = 1, bool includeEmpty = false, bool? includeWatchonly = null);
         ListSinceBlockResponse ListSinceBlock(string blockHash = null, int targetConfirmations = 1, bool? includeWatchonly = null);
         List<ListTransactionsResponse> ListTransactions(string account = null, int count = 10, int from = 0, bool? includeWatchonly = null);
         List<ListUnspentResponse> ListUnspent(int minConf = 1, int maxConf = 9999999, List<string> addresses = null);
@@ -132,8 +142,9 @@ namespace BitcoinLib.Services.RpcServices.RpcService
         bool Move(string fromAccount, string toAccount, decimal amount, int minConf = 1, string comment = "");
         string SendFrom(string fromAccount, string toBitcoinAddress, decimal amount, int minConf = 1, string comment = null, string commentTo = null);
         string SendMany(string fromAccount, Dictionary<string, decimal> toBitcoinAddress, int minConf = 1, string comment = null);
-        string SendToAddress(string bitcoinAddress, decimal amount, string comment = null, string commentTo = null);
+        string SendToAddress(string bitcoinAddress, decimal amount, string comment = null, string commentTo = null, bool subtractFeeFromAmount = false);
         string SetAccount(string bitcoinAddress, string account);
+        string SetLabel(string bitcoinAddress, string label);
         string SetTxFee(decimal amount);
         string SignMessage(string bitcoinAddress, string message);
         string WalletLock();

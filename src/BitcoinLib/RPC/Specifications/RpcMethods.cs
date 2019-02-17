@@ -61,6 +61,8 @@ namespace BitcoinLib.RPC.Specifications
         getrawtransaction,
         sendrawtransaction,
         signrawtransaction,
+        signrawtransactionwithkey,
+        signrawtransactionwithwallet,
         sighashtype,
 
         //== Util ==
@@ -70,22 +72,27 @@ namespace BitcoinLib.RPC.Specifications
         estimatesmartfee,
         estimatesmartpriority,
         validateaddress,
+        mirroraddress,
         verifymessage,
 
         //== Wallet ==
         abandontransaction,
         addmultisigaddress,
+        addwitnessaddress,
         backupwallet,
         dumpprivkey,
         dumpwallet,
         getaccount,
         getaccountaddress,
         getaddressesbyaccount,
+        getaddressesbylabel,
+        getaddressinfo,
         getbalance,
         getnewaddress,
         getrawchangeaddress,
         getreceivedbyaccount,
         getreceivedbyaddress,
+        getreceivedbylabel,
         gettransaction,
         getunconfirmedbalance,
         getwalletinfo,
@@ -96,11 +103,14 @@ namespace BitcoinLib.RPC.Specifications
         keypoolrefill,
         listaccounts,
         listaddressgroupings,
+        listlabels,
         listlockunspent,
         listreceivedbyaccount,
         listreceivedbyaddress,
+        listreceivedbylabel,
         listsinceblock,
         listtransactions,
+        listmirrtransactions,
         listunspent,
         lockunspent,
         move,
@@ -108,10 +118,17 @@ namespace BitcoinLib.RPC.Specifications
         sendmany,
         sendtoaddress,
         setaccount,
+        setlabel,
         settxfee,
         signmessage,
         walletlock,
         walletpassphrase,
-        walletpassphrasechange
+        walletpassphrasechange,
+				//2018-01-20: added Dash privatesend mixing support
+				privatesend,
+				//2018-03-02: added getaddressbalance (needs addressindex = 1 in dash.conf)
+				getaddressbalance,
+				//2018-07-23: Masternode support, usually list command is used
+				masternode
     }
 }

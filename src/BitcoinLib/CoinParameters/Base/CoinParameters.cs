@@ -7,10 +7,16 @@ using System.Diagnostics;
 using BitcoinLib.Auxiliary;
 using BitcoinLib.Services.Coins.Base;
 using BitcoinLib.Services.Coins.Bitcoin;
+using BitcoinLib.Services.Coins.BitcoinCash;
+using BitcoinLib.Services.Coins.Colx;
 using BitcoinLib.Services.Coins.Cryptocoin;
+using BitcoinLib.Services.Coins.Dallar;
+using BitcoinLib.Services.Coins.Dash;
 using BitcoinLib.Services.Coins.Dogecoin;
 using BitcoinLib.Services.Coins.Litecoin;
+using BitcoinLib.Services.Coins.Mogwaicoin;
 using BitcoinLib.Services.Coins.Sarcoin;
+using BitcoinLib.Services.Coins.Smartcash;
 
 namespace BitcoinLib.Services
 {
@@ -64,10 +70,47 @@ namespace BitcoinLib.Services
                     Console.WriteLine("[WARNING] The wallet password is either null or empty");
                     Console.ResetColor();
                 }
+								
+								#region BitcoinCash
+								if (coinService is BitcoinCashService)
+								{
+									if (!IgnoreConfigFiles)
+									{
+										DaemonUrl = ConfigurationManager.AppSettings.Get("BitcoinCash_DaemonUrl");
+										DaemonUrlTestnet = ConfigurationManager.AppSettings.Get("BitcoinCash_DaemonUrl_Testnet");
+										RpcUsername = ConfigurationManager.AppSettings.Get("BitcoinCash_RpcUsername");
+										RpcPassword = ConfigurationManager.AppSettings.Get("BitcoinCash_RpcPassword");
+										WalletPassword = ConfigurationManager.AppSettings.Get("BitcoinCash_WalletPassword");
+									}
+					
+									CoinShortName = "BCH";
+									CoinLongName = "BitcoinCash";
+									IsoCurrencyCode = "BCH";
 
-                #region Bitcoin
+									TransactionSizeBytesContributedByEachInput = 148;
+									TransactionSizeBytesContributedByEachOutput = 34;
+									TransactionSizeFixedExtraSizeInBytes = 10;
 
-                if (coinService is BitcoinService)
+									FreeTransactionMaximumSizeInBytes = 1000;
+									FreeTransactionMinimumOutputAmountInCoins = 0.01M;
+									FreeTransactionMinimumPriority = 57600000;
+									FeePerThousandBytesInCoins = 0.0001M;
+									MinimumTransactionFeeInCoins = 0.0001M;
+									MinimumNonDustTransactionAmountInCoins = 0.0000543M;
+
+									TotalCoinSupplyInCoins = 21000000;
+									EstimatedBlockGenerationTimeInMinutes = 10;
+									BlocksHighestPriorityTransactionsReservedSizeInBytes = 50000;
+
+									BaseUnitName = "Satoshi";
+									BaseUnitsPerCoin = 100000000;
+									CoinsPerBaseUnit = 0.00000001M;
+								}
+								#endregion
+
+								#region Bitcoin
+
+								else if (coinService is BitcoinService)
                 {
                     if (!IgnoreConfigFiles)
                     {
@@ -218,6 +261,194 @@ namespace BitcoinLib.Services
                 }
 
                 #endregion
+
+                #region Dash
+
+                else if (coinService is DashService)
+                {
+                    if (!IgnoreConfigFiles)
+                    {
+                        DaemonUrl = ConfigurationManager.AppSettings.Get("Dash_DaemonUrl");
+                        DaemonUrlTestnet = ConfigurationManager.AppSettings.Get("Dash_DaemonUrl_Testnet");
+                        RpcUsername = ConfigurationManager.AppSettings.Get("Dash_RpcUsername");
+                        RpcPassword = ConfigurationManager.AppSettings.Get("Dash_RpcPassword");
+                        WalletPassword = ConfigurationManager.AppSettings.Get("Dash_WalletPassword");
+                    }
+
+                    CoinShortName = "DASH";
+                    CoinLongName = "Dash";
+                    IsoCurrencyCode = "DASH";
+
+                    TransactionSizeBytesContributedByEachInput = 148;
+                    TransactionSizeBytesContributedByEachOutput = 34;
+                    TransactionSizeFixedExtraSizeInBytes = 10;
+
+                    FreeTransactionMaximumSizeInBytes = 1000;
+                    FreeTransactionMinimumOutputAmountInCoins = 0.0001M;
+                    FreeTransactionMinimumPriority = 57600000;
+                    FeePerThousandBytesInCoins = 0.0001M;
+                    MinimumTransactionFeeInCoins = 0.001M;
+                    MinimumNonDustTransactionAmountInCoins = 0.0000543M;
+
+                    TotalCoinSupplyInCoins = 18900000;
+                    EstimatedBlockGenerationTimeInMinutes = 2.7;
+                    BlocksHighestPriorityTransactionsReservedSizeInBytes = 50000;
+
+                    BaseUnitName = "Duff";
+                    BaseUnitsPerCoin = 100000000;
+                    CoinsPerBaseUnit = 0.00000001M;
+                }
+
+                #endregion
+
+                #region Mogwai
+                else if (coinService is MogwaicoinService)
+                {
+                    if (!IgnoreConfigFiles)
+                    {
+                        DaemonUrl = ConfigurationManager.AppSettings.Get("Mogwaicoin_DaemonUrl");
+                        DaemonUrlTestnet = ConfigurationManager.AppSettings.Get("Mogwaicoin_DaemonUrl_Testnet");
+                        RpcUsername = ConfigurationManager.AppSettings.Get("Mogwaicoin_RpcUsername");
+                        RpcPassword = ConfigurationManager.AppSettings.Get("Mogwaicoin_RpcPassword");
+                        WalletPassword = ConfigurationManager.AppSettings.Get("Mogwaicoin_WalletPassword");
+                    }
+                    CoinShortName = "Mogwaicoin";
+                    CoinLongName = "Mogwaicoin";
+                    IsoCurrencyCode = "MOG";
+                    TransactionSizeBytesContributedByEachInput = 148;
+                    TransactionSizeBytesContributedByEachOutput = 34;
+                    TransactionSizeFixedExtraSizeInBytes = 10;
+                    FreeTransactionMaximumSizeInBytes = 1000;
+                    FreeTransactionMinimumOutputAmountInCoins = 0.0001M;
+                    FreeTransactionMinimumPriority = 57600000;
+                    FeePerThousandBytesInCoins = 0.0001M;
+                    MinimumTransactionFeeInCoins = 0.001M;
+                    MinimumNonDustTransactionAmountInCoins = 0.0000543M;
+                    TotalCoinSupplyInCoins = 50000000;
+                    EstimatedBlockGenerationTimeInMinutes = 2.0;
+                    BlocksHighestPriorityTransactionsReservedSizeInBytes = 50000;
+                    BaseUnitName = "Puff";
+                    BaseUnitsPerCoin = 100000000;
+                    CoinsPerBaseUnit = 0.00000001M;
+                }
+                #endregion
+
+                #region Smartcash
+
+                else if (coinService is SmartcashService)
+                {
+                    if (!IgnoreConfigFiles)
+                    {
+                        DaemonUrl = ConfigurationManager.AppSettings.Get("Smartcash_DaemonUrl");
+                        DaemonUrlTestnet = ConfigurationManager.AppSettings.Get("Smartcash_DaemonUrl_Testnet");
+                        RpcUsername = ConfigurationManager.AppSettings.Get("Smartcash_RpcUsername");
+                        RpcPassword = ConfigurationManager.AppSettings.Get("Smartcash_RpcPassword");
+                        WalletPassword = ConfigurationManager.AppSettings.Get("Smartcash_WalletPassword");
+                    }
+
+                    CoinShortName = "SMART";
+                    CoinLongName = "Smartcash";
+                    IsoCurrencyCode = "SMART";
+
+                    TransactionSizeBytesContributedByEachInput = 148;
+                    TransactionSizeBytesContributedByEachOutput = 34;
+                    TransactionSizeFixedExtraSizeInBytes = 10;
+
+                    FreeTransactionMaximumSizeInBytes = 0; // free txs are not supported
+                    FreeTransactionMinimumOutputAmountInCoins = 0;
+                    FreeTransactionMinimumPriority = 0;
+                    FeePerThousandBytesInCoins = 0.0001M;
+                    MinimumTransactionFeeInCoins = 0.001M;
+                    MinimumNonDustTransactionAmountInCoins = 0.00001M;
+
+                    TotalCoinSupplyInCoins = 5000000000;
+                    EstimatedBlockGenerationTimeInMinutes = 0.916667;
+                    BlocksHighestPriorityTransactionsReservedSizeInBytes = 50000;
+
+                    BaseUnitName = "Smartoshi";
+                    BaseUnitsPerCoin = 100000000;
+                    CoinsPerBaseUnit = 0.00000001M;
+                }
+
+                #endregion
+
+                #region Dallar
+
+                else if (coinService is DallarService)
+                {
+                    if (!IgnoreConfigFiles)
+                    {
+                        DaemonUrl = ConfigurationManager.AppSettings.Get("Dallar_DaemonUrl");
+                        DaemonUrlTestnet = ConfigurationManager.AppSettings.Get("Dallar_DaemonUrl_Testnet");
+                        RpcUsername = ConfigurationManager.AppSettings.Get("Dallar_RpcUsername");
+                        RpcPassword = ConfigurationManager.AppSettings.Get("Dallar_RpcPassword");
+                        WalletPassword = ConfigurationManager.AppSettings.Get("Dallar_WalletPassword");
+                    }
+
+                    CoinShortName = "DAL";
+                    CoinLongName = "Dallar";
+                    IsoCurrencyCode = "DAL";
+
+                    TransactionSizeBytesContributedByEachInput = 148;
+                    TransactionSizeBytesContributedByEachOutput = 34;
+                    TransactionSizeFixedExtraSizeInBytes = 10;
+
+                    FreeTransactionMaximumSizeInBytes = 1000;
+                    FreeTransactionMinimumOutputAmountInCoins = 0.001M;
+                    FreeTransactionMinimumPriority = 230400000;
+                    FeePerThousandBytesInCoins = 0.001M;
+                    MinimumTransactionFeeInCoins = 0.0001M;
+                    MinimumNonDustTransactionAmountInCoins = 0.001M;
+
+                    TotalCoinSupplyInCoins = 80000000;
+                    EstimatedBlockGenerationTimeInMinutes = 1.0;
+                    BlocksHighestPriorityTransactionsReservedSizeInBytes = 16000;
+                    BlockMaximumSizeInBytes = 750000;
+
+                    BaseUnitName = "Allar";
+                    BaseUnitsPerCoin = 100000000;
+                    CoinsPerBaseUnit = 0.00000001M;
+                }
+
+                #endregion
+								
+								#region Colx
+
+								else if (coinService is ColxService)
+								{
+									if (!IgnoreConfigFiles)
+									{
+										DaemonUrl = ConfigurationManager.AppSettings.Get("Colx_DaemonUrl");
+										DaemonUrlTestnet = ConfigurationManager.AppSettings.Get("Colx_DaemonUrl_Testnet");
+										RpcUsername = ConfigurationManager.AppSettings.Get("Colx_RpcUsername");
+										RpcPassword = ConfigurationManager.AppSettings.Get("Colx_RpcPassword");
+										WalletPassword = ConfigurationManager.AppSettings.Get("Colx_WalletPassword");
+									}
+									CoinShortName = "COLX";
+									CoinLongName = "ColossusXT Coin";
+									IsoCurrencyCode = "COLX";
+
+									TransactionSizeBytesContributedByEachInput = 148;
+									TransactionSizeBytesContributedByEachOutput = 34;
+									TransactionSizeFixedExtraSizeInBytes = 10;
+
+									FreeTransactionMaximumSizeInBytes = 1000;
+									FreeTransactionMinimumOutputAmountInCoins = 0.0001M;
+									FreeTransactionMinimumPriority = 57600000;
+									FeePerThousandBytesInCoins = 0.0001M;
+									MinimumTransactionFeeInCoins = 0.001M;
+									MinimumNonDustTransactionAmountInCoins = 0.0000543M;
+
+									TotalCoinSupplyInCoins = 18900000;
+									EstimatedBlockGenerationTimeInMinutes = 2.7;
+									BlocksHighestPriorityTransactionsReservedSizeInBytes = 50000;
+
+									BaseUnitName = "ucolx";
+									BaseUnitsPerCoin = 100000000;
+									CoinsPerBaseUnit = 0.00000001M;
+								}
+
+								#endregion
 
                 #region Agnostic coin (cryptocoin)
 

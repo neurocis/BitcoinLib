@@ -5,24 +5,22 @@ using System.Collections.Generic;
 
 namespace BitcoinLib.Requests.SignRawTransaction
 {
-    public class SignRawTransactionRequest
+    public class SignRawTransactionWithWalletRequest
     {
-        public SignRawTransactionRequest(string rawTransactionHex, string sigHashType = "ALL")
+        public SignRawTransactionWithWalletRequest(string rawTransactionHex, string sigHashType = "ALL")
         {
             RawTransactionHex = rawTransactionHex;
-            Inputs = new List<SignRawTransactionInput>();
-            PrivateKeys = new List<string>();
+            Inputs = new List<SignRawTransactionWithWalletInput>();
             SigHashType = sigHashType;
         }
 
         public string RawTransactionHex { get; set; }
-        public List<SignRawTransactionInput> Inputs { get; set; }
-        public List<string> PrivateKeys { get; set; }
+        public List<SignRawTransactionWithWalletInput> Inputs { get; set; }
         public string SigHashType { get; set; }
 
         public void AddInput(string txId, int vout, string scriptPubKey, string redeemScript)
         {
-            Inputs.Add(new SignRawTransactionInput
+            Inputs.Add(new SignRawTransactionWithWalletInput
             {
                 TxId = txId,
                 Vout = vout,
@@ -31,14 +29,9 @@ namespace BitcoinLib.Requests.SignRawTransaction
             });
         }
 
-        public void AddInput(SignRawTransactionInput signRawTransactionInput)
+        public void AddInput(SignRawTransactionWithWalletInput input)
         {
-            Inputs.Add(signRawTransactionInput);
-        }
-
-        public void AddKey(string privateKey)
-        {
-            PrivateKeys.Add(privateKey);
+            Inputs.Add(input);
         }
     }
 }
